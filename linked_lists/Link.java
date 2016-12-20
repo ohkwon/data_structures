@@ -10,7 +10,7 @@ public class Link {
   //pointer
   public Link next;
   
-  //
+  //initializer
   public Link(String bookName, int millionsSold){
     this.bookName = bookName;
     this.millionsSold = millionsSold;
