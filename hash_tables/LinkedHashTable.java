@@ -12,7 +12,7 @@ class LinkedHashTable {
     HashTable testHashTable = new HashTable(30);
     String[] array = {"harris", "Ponco", "dinner", "patsy", "django"};
     testHashTable.hashFunction(array, testHashTable.table);
-    testHashTable.display();
+
   }
 }
 
@@ -28,6 +28,7 @@ class Node {
 class LinkedList {
 
   public Node firstNode;
+  public int size;
 
   LinkedList() {
     firstNode = null;
@@ -48,6 +49,8 @@ class LinkedList {
 
     firstNode = newNode;
 
+    size ++;
+
     return newNode;
   }
 
@@ -59,6 +62,7 @@ class LinkedList {
     } else {
       System.out.println("Empty Linked List");
     }
+    size --;
     return referenceNode;
   }
 
@@ -97,12 +101,13 @@ class LinkedList {
     } else {
       prevNode.next = node.next;
     }
+    size --;
     return node;
   }
 }
 
 class HashTable {
-  public String[] table;
+  public LinkedList[] table;
   public int arraySize;
   public int itemCount;
 
@@ -111,21 +116,35 @@ class HashTable {
     table = new String[size];
   }
 
-  public void display() {
+  public void displayOld() {
     for (int i = 0; i < arraySize; i ++) {
       System.out.println("(" + table[i] + ", " + i + ")");
     }
   }
 
-  public void hashFunction(String[] inputArray, String[] table) {
-    for (int i = 0; i < inputArray.length; i ++) {
-      String newWord = inputArray[i];
-      int tableIndex = Character.getNumericValue(newWord.charAt(0)) % arraySize;
-      linearAdd(newWord, table, tableIndex);
+  public void display() {
+    for (int i = 0; i < arraySize; i ++) {
+      System.out.println("(" + table[i].size + ", " + i ")");
+      System.out.println("{");
+      table[i].display();
+      System.out.println("}");
     }
   }
 
-  public void linearAdd(String input, String[] table, int index) {
+  public void hashFunction(String[] inputArray, LinkedList[] table) {
+    for (int i = 0; i < inputArray.length; i ++) {
+      String newWord = inputArray[i];
+      int tableIndex = Character.getNumericValue(newWord.charAt(0)) % arraySize;
+      // linearAdd(newWord, table, tableIndex);
+      linkedListAdd(newWord, table, tableIndex);
+    }
+  }
+
+  public void linkedListAdd(String input, LinkedList[] table, int index) {
+    table[index].addFirst(input);
+  }
+
+  public void linearAdd(String input, LinkedList[] table, int index) {
     if (table[index] != null) {
       if (index >= arraySize - 1) {
         linearAdd(input, table, 0);
@@ -137,7 +156,7 @@ class HashTable {
     }
   }
 
-  public String findKey(String key) {
+  public String findKeyOld(String key) {
     int tableIndex = Character.getNumericValue(key.charAt(0)) % arraySize;
     while (table[tableIndex] != null) {
       if (table[tableIndex] == key) {
@@ -151,5 +170,10 @@ class HashTable {
       }
     }
     return null;
+  }
+
+  public Node findNode(String word) {
+    int tableIndex = Character.getNumericValue(word.charAt(0)) % arraySize;
+    return table[tableIndex].findNode(word);
   }
 }
