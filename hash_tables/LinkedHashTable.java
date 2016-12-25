@@ -12,6 +12,7 @@ class LinkedHashTable {
     HashTable testHashTable = new HashTable(30);
     String[] array = {"harris", "Ponco", "dinner", "patsy", "django"};
     testHashTable.hashFunction(array, testHashTable.table);
+    testHashTable.display();
 
   }
 }
@@ -37,7 +38,7 @@ class LinkedList {
   public void display() {
     Node node = firstNode;
     while (node != null) {
-      System.out.println(node.word);
+      System.out.print(node.word + " ");
       node = node.next;
     }
   }
@@ -113,7 +114,7 @@ class HashTable {
 
   public HashTable(int size) {
     arraySize = size;
-    table = new String[size];
+    table = new LinkedList[size];
   }
 
   public void displayOld() {
@@ -124,10 +125,15 @@ class HashTable {
 
   public void display() {
     for (int i = 0; i < arraySize; i ++) {
-      System.out.println("(" + table[i].size + ", " + i ")");
-      System.out.println("{");
-      table[i].display();
-      System.out.println("}");
+      if (table[i] != null) {
+        System.out.println("(" + i + ", " + table[i].size + ")");
+        System.out.print("{");
+        table[i].display();
+        System.out.print("}");
+      } else {
+        System.out.println("(" + i + ")");
+      }
+      System.out.println(" ");
     }
   }
 
@@ -141,10 +147,13 @@ class HashTable {
   }
 
   public void linkedListAdd(String input, LinkedList[] table, int index) {
+    if (table[index] == null) {
+      table[index] = new LinkedList();
+    }
     table[index].addFirst(input);
   }
 
-  public void linearAdd(String input, LinkedList[] table, int index) {
+  public void linearAdd(String input, String[] table, int index) {
     if (table[index] != null) {
       if (index >= arraySize - 1) {
         linearAdd(input, table, 0);
@@ -156,7 +165,7 @@ class HashTable {
     }
   }
 
-  public String findKeyOld(String key) {
+  public String findKeyOld(String key, String[] table) {
     int tableIndex = Character.getNumericValue(key.charAt(0)) % arraySize;
     while (table[tableIndex] != null) {
       if (table[tableIndex] == key) {
