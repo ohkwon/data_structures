@@ -23,14 +23,6 @@ class LinkedList
   def add_front(input_node)
     input_node.next = @front
     @front = input_node
-    if input_node.next == nil
-      puts "I placed " + @front.num.to_s + " in front of nil"
-    else
-      puts "I placed " + @front.num.to_s + " in front of " + @front.next.num.to_s
-      if @front.next.next != nil
-        puts "which is in front of " + @front.next.next.num.to_s
-      end
-    end
     @size += 1
   end
 
@@ -77,6 +69,7 @@ class LinkedList
   end
 
   #simple formatted display for entire linked list
+  #this algorithm for display was having issues, not sure what it was
   def display
     current_node = @front
     puts @size
@@ -87,6 +80,23 @@ class LinkedList
       current_node = current_node.next
     end
     puts "}"
+  end
+
+  #outputs all nodes in more readable format, and is accurate
+  def display_2
+    puts "I have " + @front.num.to_s
+    if (@front.next != nil)
+      display_2_1(@front.next)
+    end
+  end
+
+  def display_2_1(node)
+    if node != nil
+      puts "which is in front of " + node.num.to_s
+    end
+    if node.next != nil
+      display_2_1(node.next)
+    end
   end
 end
 
@@ -101,11 +111,11 @@ nodes = [
 nodes.each do |node|
   puts node.num
   test_ll.add_front(node)
-  test_ll.display
+  test_ll.display_2
 end
 
-test_ll.display
+test_ll.display_2
 puts "{" + test_ll.find(85).num.to_s + "}"
 puts test_ll.find(95)
 test_ll.remove(85)
-test_ll.display
+test_ll.display_2
