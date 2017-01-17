@@ -41,6 +41,7 @@ class TheStack {
       //stack is empty, cannot pop
       System.out.println("Stack is empty, cannot remove");
     }
+    return null;
   }
 
   public String peek() {
@@ -48,8 +49,29 @@ class TheStack {
     return stackArray[topOfStack];
   }
 
+  public void display() {
+    System.out.print("(");
+    for (int i = 0; i < stackSize; i++) {
+      if (stackArray[i] != "-1") {
+        System.out.print(stackArray[i] + ", ");
+      } else {
+        System.out.print(" , ");
+      }
+    }
+    System.out.println("}");
+  }
+
   public static void main(String[] args) {
-    testStack = new TheStack(10);
-    testStack = 
+    TheStack testStack = new TheStack(10);
+    testStack.push("Howl's");
+    testStack.display();
+    testStack.push("Moving");
+    testStack.display();
+    testStack.peek();
+    testStack.push("Castle");
+    testStack.display();
+    testStack.peek();
+    testStack.pop();
+    testStack.display();
   }
 }
