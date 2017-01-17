@@ -21,7 +21,7 @@ class LinkedList
   #add the inputted value as a node to the front
   #consider changing it so it create the node objects in the method itself
   def add_front(input_node)
-    input_node.next = @front
+    input_node.next = @front #create node here instead
     @front = input_node
     @size += 1
   end
@@ -33,7 +33,7 @@ class LinkedList
       if (current_node.num == number)
         return current_node
       else
-        current_node = current_node.next
+        current_node = current_node.next 
       end
     end
     puts "Could not find node"
@@ -76,8 +76,8 @@ class LinkedList
     puts "{"
     puts current_node.num
     while (current_node.next != nil)
-      puts current_node.num
       current_node = current_node.next
+      puts current_node.num
     end
     puts "}"
   end
@@ -111,11 +111,12 @@ nodes = [
 nodes.each do |node|
   puts node.num
   test_ll.add_front(node)
-  test_ll.display_2
+  test_ll.display
 end
 
-test_ll.display_2
-puts "{" + test_ll.find(85).num.to_s + "}"
-puts test_ll.find(95)
-test_ll.remove(85)
-test_ll.display_2
+test_ll.display
+# test_ll.display_2
+# puts "{" + test_ll.find(85).num.to_s + "}"
+# puts test_ll.find(95)
+# test_ll.remove(85)
+# test_ll.display_2
