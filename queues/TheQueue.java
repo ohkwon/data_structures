@@ -28,14 +28,14 @@ class TheQueue {
 
   public void remove() {
     //check if queue is not empty
-    if (numberOfItems > 0) {
+    if (itemCount > 0) {
       System.out.println("Removed " + queueArray[front] + " from the front");
       //set front of queue to default empty value
-      queueArray = "-1";
+      queueArray[front] = "-1";
       front++;
       itemCount--;
     } else {
-      System.out.println("Queue is empty")
+      System.out.println("Queue is empty");
     }
   }
 
@@ -44,11 +44,12 @@ class TheQueue {
   }
 
   public String priorityInsert(String input) {
+    int i;
     //check if queue is empty
     if (itemCount == 0) {
       insert(input);
     } else {
-      for (int i = rear; i >= front; i--) {
+      for (i = rear; i >= front; i--) {
         if (Integer.parseInt(input) > Integer.parseInt(queueArray[i])) {
           if (i + 1 >= queueSize) {
             System.out.println("Queue is full");
@@ -64,11 +65,43 @@ class TheQueue {
       queueArray[i + 1] = input;
       rear++;
       itemCount++;
-      return input
+      return input;
     }
+    return null;
+  }
+
+  public void display() {
+    System.out.print("(");
+    for (int i = 0; i < queueSize; i++) {
+      if (queueArray[i] != "-1") {
+        System.out.print(queueArray[i]);
+      } else {
+        System.out.print(" ");
+      }
+      if (i != queueSize -1) {
+        System.out.print(", ");
+      }
+    }
+    System.out.println(")");
   }
 
   public static void main(String[] args) {
-
+    TheQueue testQueue = new TheQueue(10);
+    testQueue.insert("20");
+    testQueue.display();
+    testQueue.insert("15");
+    testQueue.display();
+    testQueue.peek();
+    testQueue.insert("10");
+    testQueue.display();
+    testQueue.peek();
+    testQueue.remove();
+    testQueue.display();
+    testQueue.priorityInsert("18");
+    testQueue.display();
+    testQueue.priorityInsert("12");
+    testQueue.display();
+    testQueue.priorityInsert("22");
+    testQueue.display();
   }
 }
